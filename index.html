@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack &amp; Kathy — Osita Cariñosita</title>
+<meta name="description" content="Una pequeña sorpresa para la persona que hace mi vida mejor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Parisienne&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__img" style="background-image:url('foto3.jpg')"></div>
+  <div class="hero__gradient"></div>
+  <canvas id="embers" class="hero__embers"></canvas>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">una pequeña sorpresa para</p>
+    <h1 class="hero__names">Jack <span class="hero__amp">&amp;</span> Kathy</h1>
+    <p class="hero__tagline">para la persona que hace mi vida mejor.</p>
+    <button class="hero__scroll" id="scrollBtn" aria-label="Descubrir">
+      <span>descubrir</span>
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none" aria-hidden="true">
+        <path d="M7 1V19M7 19L1 13M7 19L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<section class="gallery" id="gallery">
+  <p class="section__eyebrow">recuerdos</p>
+  <h2 class="section__title">La noche de la fogata</h2>
+
+  <div class="gallery__grid">
+    <figure class="gallery__item gallery__item--tall">
+      <img src="foto1.jpg" alt="Jack y Kathy sentados juntos, sonriendo" loading="lazy">
+      <figcaption>El día que todo se sintió en su lugar.</figcaption>
+    </figure>
+
+    <figure class="gallery__item">
+      <img src="foto2.jpg" alt="Jack y Kathy, retrato de cerca" loading="lazy">
+      <figcaption>Mi persona favorita, de cerca.</figcaption>
+    </figure>
+
+    <figure class="gallery__item gallery__item--wide">
+      <img src="foto3.jpg" alt="Jack colocando una corona a Kathy" loading="lazy">
+      <figcaption>Esa noche no solo se encendió la fogata.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ CARTA ============ -->
+<section class="letter" id="letter">
+  <canvas id="embers2" class="letter__embers"></canvas>
+  <div class="letter__wrap">
+    <p class="section__eyebrow section__eyebrow--light">para ti</p>
+    <h2 class="letter__title">Kathy,</h2>
+
+    <div class="letter__body">
+      <p>Desde que llegaste a mi vida, todo tiene más color. No sé si te lo digo lo suficiente, pero quiero que sepas que eres la persona que hace que mis días buenos sean mejores, y los días difíciles, más fáciles de llevar solo con tenerte cerca.</p>
+
+      <p>Me encanta tu risa, la forma en que te emocionas por las cosas pequeñas, y cómo incluso en silencio, contigo, todo se siente en su lugar. Contigo he aprendido lo que es querer construir algo real, algo que dure.</p>
+
+      <p>Y sí, eres una niña bien necia y pleitista <span class="letter__wink">(lo sabes)</span>, pero eso no le quita ni un poquito a lo mucho que te quiero. Siempre vas a ser mi osita cariñosita.</p>
+
+      <p class="letter__highlight">Me di el lujo de poner nuestras fotos de la fogata en esta página, porque creo que esa noche no solo se encendió el fuego de la fogata... se encendió el de un amor.</p>
+
+      <p>Esta página es solo una forma pequeña de decirte lo grande que es lo que siento por ti. Gracias por elegirme, por quedarte, por ser mi persona.</p>
+    </div>
+
+    <p class="letter__sign">Te amo, hoy y siempre.<br><span class="script">Jack</span></p>
+  </div>
+</section>
+
+<!-- ============ TE AMO PORQUE ============ -->
+<section class="reasons" id="reasons">
+  <p class="section__eyebrow">razones</p>
+  <h2 class="section__title">Te amo porque...</h2>
+  <p class="reasons__hint">toca cada tarjeta</p>
+
+  <div class="reasons__grid">
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">💛</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Me haces reír hasta en los días grises.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">🌙</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Tu abrazo es mi lugar favorito.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">☕</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Te apasionas cuando hablas de lo que te gusta.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">🌟</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Me entiendes sin que tenga que explicar mucho.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">🍃</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Tu paciencia y tu forma de cuidarme.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">💫</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Contigo hasta lo simple se vuelve especial.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">🔥</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Eres mi persona favorita en el mundo.</p></div>
+      </div>
+    </button>
+
+    <button class="card" type="button">
+      <div class="card__inner">
+        <div class="card__face card__face--front"><span class="card__icon">💍</span><p>Toca para ver</p></div>
+        <div class="card__face card__face--back"><p>Quiero seguir escribiendo esta historia contigo.</p></div>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- ============ CIERRE ============ -->
+<footer class="closing" id="closing">
+  <div class="closing__embers-bg"></div>
+  <p class="closing__text">Esto es solo el comienzo de todo lo que quiero vivir contigo.<br>Gracias por ser tú.</p>
+  <p class="closing__sign script">Con todo mi amor, Jack</p>
+  <p class="closing__nick">tu osita cariñosita, siempre. 🐻🔥</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
