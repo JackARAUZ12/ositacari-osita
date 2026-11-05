@@ -2,154 +2,852 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jack &amp; Kathy — Osita Cariñosita</title>
-<meta name="description" content="Una pequeña sorpresa para la persona que hace mi vida mejor.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0e0a08">
+<title>100 cosas que amo de Katherin</title>
+<meta name="description" content="100 cosas que amo de Katherin, de parte de Jack Arauz.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Parisienne&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Parisienne&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0e0a08;
+  --gold:#c9a45c;
+  --gold-2:#e8d29e;
+  --gold-ink:#9a7232;
+  --ink:#2b211a;
+  --ink-soft:#7a6652;
+  --pw:360px;
+  --ph:530px;
+  --persp:1800px;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--night);color:#f5ecdc;overflow:hidden;overscroll-behavior:none}
+body{
+  font-family:'Jost',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+  user-select:none;-webkit-user-select:none;
+}
+button{font:inherit;color:inherit}
+
+/* ---------- Fondo ambiental ---------- */
+.amb{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--night)}
+.amb__img{
+  position:absolute;inset:-60px;background-size:cover;background-position:center;
+  filter:blur(30px) saturate(1.15) brightness(.42);transform:scale(1.1);
+  opacity:0;transition:opacity 1.6s ease;
+}
+.amb__img.on{opacity:1}
+.amb::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(14,10,8,.1),rgba(14,10,8,.88) 78%)}
+#embers{position:fixed;inset:0;z-index:1;pointer-events:none}
+
+/* ---------- Estructura ---------- */
+.app{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center}
+.stage{flex:1;width:100%;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;touch-action:none;cursor:grab}
+.stage:active{cursor:grabbing}
+
+.book{
+  position:relative;width:var(--pw);height:var(--ph);
+  perspective:var(--persp);perspective-origin:50% 50%;
+  transition:transform .95s cubic-bezier(.65,0,.35,1),opacity .4s ease;
+}
+.book.is-spread{width:calc(var(--pw) * 2)}
+.book.no-anim{transition:none}
+
+.base{
+  position:absolute;top:0;height:100%;width:var(--pw);left:0;
+  background:#efe6d3;opacity:0;transition:opacity .35s ease;pointer-events:none;
+}
+.base.on{opacity:1}
+.base-r{
+  border-radius:2px 6px 6px 2px;
+  box-shadow:1px 0 0 #e6dcc6,2px 1px 0 #ddd0b6,3px 1px 0 #e6dcc6,4px 2px 0 #d3c4a6,5px 2px 0 #c9b998,
+             0 34px 60px -18px rgba(0,0,0,.75),0 12px 26px rgba(0,0,0,.45);
+}
+.is-spread .base-r{left:var(--pw)}
+.base-l{
+  border-radius:6px 2px 2px 6px;
+  box-shadow:-1px 0 0 #e6dcc6,-2px 1px 0 #ddd0b6,-3px 1px 0 #e6dcc6,-4px 2px 0 #d3c4a6,-5px 2px 0 #c9b998,
+             0 34px 60px -18px rgba(0,0,0,.75),0 12px 26px rgba(0,0,0,.45);
+}
+
+.leaf{position:absolute;top:0;left:0;width:var(--pw);height:100%;transform-origin:0 50%}
+.is-spread .leaf{left:var(--pw)}
+.face{position:absolute;inset:0;overflow:hidden;container-type:size;border-radius:2px 6px 6px 2px;background:#f7f0e2}
+.face--back{transform:scaleX(-1);border-radius:6px 2px 2px 6px}
+.shade{
+  position:absolute;inset:0;pointer-events:none;opacity:0;z-index:5;
+  background:linear-gradient(to left,rgba(25,14,6,.55),rgba(25,14,6,.12) 60%,rgba(255,250,240,.06));
+}
+.face--back .shade{background:linear-gradient(to right,rgba(25,14,6,.5),rgba(25,14,6,.1) 60%,rgba(255,250,240,.05))}
+.gutter{position:absolute;top:0;bottom:0;width:10%;pointer-events:none;z-index:4}
+.face--front .gutter{left:0;background:linear-gradient(90deg,rgba(45,28,12,.3),rgba(45,28,12,.09) 38%,transparent)}
+.face--back .gutter{right:0;background:linear-gradient(270deg,rgba(45,28,12,.3),rgba(45,28,12,.09) 38%,transparent)}
+.k-cover .gutter,.k-back .gutter{width:7%;background:linear-gradient(90deg,rgba(0,0,0,.6),rgba(255,240,210,.1) 38%,rgba(0,0,0,.28) 58%,transparent)}
+.face--back.k-back .gutter{background:linear-gradient(270deg,rgba(0,0,0,.6),rgba(255,240,210,.1) 38%,rgba(0,0,0,.28) 58%,transparent)}
+
+/* ---------- Páginas ---------- */
+.pg{position:absolute;inset:0}
+.paper{
+  background-color:#f7f0e2;
+  background-image:var(--noise),radial-gradient(130% 95% at 50% 0%,#fcf8f0 0%,#f5eddc 58%,#ebdfc6 100%);
+}
+.ph{position:absolute;inset:0;background-size:cover;background-position:center 30%;background-color:#2a1c15}
+.veil{position:absolute;inset:0}
+.frame{position:absolute;inset:4.5cqw;border:1px solid rgba(232,210,158,.5);pointer-events:none}
+.frame::after{content:'';position:absolute;inset:1.4cqw;border:1px solid rgba(232,210,158,.2)}
+.gold{
+  background:linear-gradient(180deg,#f6e4b0 0%,#d7b46c 50%,#9c7434 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.gold-ink{
+  background:linear-gradient(180deg,#c9994a 0%,#a17733 55%,#7a5622 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.orn{display:flex;align-items:center;justify-content:center;gap:3cqw;color:#b48a45}
+.orn i{display:block;width:12cqw;height:1px;background:linear-gradient(90deg,transparent,currentColor)}
+.orn i:last-child{background:linear-gradient(270deg,transparent,currentColor)}
+.orn svg{width:4.4cqw;height:4.4cqw;display:block}
+
+/* Portada */
+.veil--cv{background:linear-gradient(180deg,rgba(10,6,4,.6) 0%,rgba(10,6,4,.08) 26%,rgba(10,6,4,.18) 48%,rgba(10,6,4,.94) 100%)}
+.cv__top{position:absolute;top:10cqw;left:0;right:0;text-align:center;font:400 2.5cqw/1 'Jost';letter-spacing:.5em;text-transform:uppercase;color:var(--gold-2);padding-left:.5em}
+.cv__in{position:absolute;left:8cqw;right:8cqw;bottom:11cqw;display:flex;flex-direction:column;align-items:center;text-align:center}
+.cv__num{font:500 38cqw/.8 'Cormorant Garamond';letter-spacing:-.02em;filter:drop-shadow(0 1cqw 3cqw rgba(0,0,0,.5))}
+.cv__t{margin-top:3cqw;font:300 3cqw/1 'Jost';letter-spacing:.42em;text-transform:uppercase;color:#f3e7cf;padding-left:.42em}
+.cv__name{margin-top:1cqw;font:400 17cqw/1.15 'Parisienne';color:#fff4de;text-shadow:0 1cqw 4cqw rgba(0,0,0,.6)}
+.cv__rule{width:20cqw;height:1px;margin:3.5cqw 0;background:linear-gradient(90deg,transparent,var(--gold-2),transparent)}
+.cv__by{font:italic 400 4.6cqw/1 'Cormorant Garamond';color:#f0e2c6}
+
+/* Ex libris */
+.ep{
+  background-color:#3a1d18;
+  background-image:
+    radial-gradient(rgba(232,210,158,.22) 1px,transparent 1.6px),
+    radial-gradient(rgba(232,210,158,.11) 1px,transparent 1.6px),
+    radial-gradient(120% 90% at 50% 40%,#4a2620,#2a1410);
+  background-size:5cqw 5cqw,5cqw 5cqw,100% 100%;
+  background-position:0 0,2.5cqw 2.5cqw,0 0;
+  display:flex;align-items:center;justify-content:center;
+}
+.ep__plate{
+  width:66cqw;padding:10cqw 7cqw;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3.5cqw;
+  background-color:#f7f0e2;background-image:var(--noise),linear-gradient(#fbf6ec,#f0e6d2);
+  outline:1px solid #b48a45;outline-offset:-2.6cqw;box-shadow:0 2cqw 6cqw rgba(0,0,0,.45);
+}
+.ep__k{font:500 2.5cqw/1 'Jost';letter-spacing:.45em;text-transform:uppercase;color:var(--ink-soft);padding-left:.45em}
+.ep__name{font:400 13cqw/1.1 'Parisienne'}
+
+/* Foto */
+.pp{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6cqw;padding:10cqw}
+.pp__frame{width:72cqw;aspect-ratio:4/5;padding:3.2cqw;background:#fffdf8;box-shadow:0 2.5cqw 7cqw rgba(60,40,20,.3),0 .5cqw 1.2cqw rgba(60,40,20,.2);transform:rotate(-2deg)}
+.pp__img{width:100%;height:100%;background-size:cover;background-position:center 30%;background-color:#d9ccb4}
+.pp__cap{font:400 9cqw/1 'Parisienne';color:#7a5a2c}
+
+/* Capítulo */
+.veil--dv{background:linear-gradient(0deg,rgba(10,6,4,.94) 0%,rgba(10,6,4,.6) 42%,rgba(10,6,4,.08) 72%,rgba(10,6,4,.4) 100%)}
+.dv__in{position:absolute;left:10cqw;right:10cqw;bottom:13cqw;text-align:center;display:flex;flex-direction:column;align-items:center}
+.dv__k{font:400 2.6cqw/1 'Jost';letter-spacing:.45em;text-transform:uppercase;color:var(--gold-2);padding-left:.45em}
+.dv__roman{font:500 17cqw/1 'Cormorant Garamond';margin:2cqw 0 1cqw}
+.dv__t{font:italic 500 9.4cqw/1.08 'Cormorant Garamond';color:#fff5e4;text-shadow:0 .6cqw 3cqw rgba(0,0,0,.5)}
+.dv__r{margin-top:5cqw;font:300 2.7cqw/1 'Jost';letter-spacing:.3em;text-transform:uppercase;color:#eadcc0;padding-left:.3em}
+
+/* Razones */
+.rp{display:flex;flex-direction:column;height:100%;padding:9cqw 8cqw 6.5cqw 12cqw}
+.face--back .rp{padding-left:8cqw;padding-right:12cqw}
+.rh{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;padding-bottom:3cqw;border-bottom:1px solid rgba(160,120,60,.35)}
+.rh__k{font:500 2.3cqw/1 'Jost';letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.rh__t{font:italic 500 3.7cqw/1.1 'Cormorant Garamond';color:var(--gold-ink);text-align:right}
+.rl{list-style:none;flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding:2cqw 0 1cqw}
+.rl li{display:grid;grid-template-columns:10.5cqw 1fr;align-items:baseline;column-gap:2.2cqw}
+.rn{font:italic 500 7.4cqw/1 'Cormorant Garamond';text-align:right}
+.rl p{font:400 4.75cqw/1.3 'Cormorant Garamond';color:var(--ink)}
+.rl em,.sp__text em{font-style:italic;font-weight:500;color:#8b6a34}
+.pf{display:flex;align-items:center;justify-content:center;gap:2.5cqw;font:italic 400 3.3cqw/1 'Cormorant Garamond';color:var(--ink-soft)}
+.pf i{display:block;width:5cqw;height:1px;background:rgba(160,120,60,.5)}
+
+/* Últimas diez */
+.sp{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12cqw 11cqw 14cqw 13cqw;height:100%}
+.face--back .sp{padding-left:11cqw;padding-right:13cqw}
+.sp__k{font:500 2.5cqw/1 'Jost';letter-spacing:.45em;text-transform:uppercase;color:var(--ink-soft);padding-left:.45em}
+.sp__num{font:italic 500 33cqw/.95 'Cormorant Garamond';margin:1cqw 0 2cqw}
+.sp__text{margin-top:5cqw;font:italic 400 6.6cqw/1.3 'Cormorant Garamond';color:var(--ink)}
+.sp .pf{position:absolute;left:0;right:0;bottom:7cqw}
+.sp--last{background-image:var(--noise),radial-gradient(80% 55% at 50% 40%,rgba(227,150,80,.16),transparent 70%),radial-gradient(130% 95% at 50% 0%,#fcf8f0 0%,#f5eddc 58%,#ebdfc6 100%)}
+.sp--last .sp__num{font-size:30cqw}
+.sp--last .sp__text{font-size:7.4cqw}
+
+/* Cita */
+.veil--q{background:radial-gradient(120% 80% at 50% 50%,rgba(10,6,4,.62),rgba(10,6,4,.9))}
+.qt__in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12cqw}
+.qt__mark{font:500 30cqw/.6 'Cormorant Garamond';height:14cqw}
+.qt__text{font:italic 400 7.2cqw/1.32 'Cormorant Garamond';color:#fff5e4;text-shadow:0 .5cqw 3cqw rgba(0,0,0,.5)}
+.qt__rule{width:16cqw;height:1px;margin:6cqw 0 4cqw;background:linear-gradient(90deg,transparent,var(--gold-2),transparent)}
+.qt__by{font:400 2.7cqw/1.5 'Jost';letter-spacing:.32em;text-transform:uppercase;color:var(--gold-2)}
+.qt__by em{font-style:normal;color:#eadcc0}
+
+/* Te amo */
+.fn{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10cqw}
+.fn__ph{width:44cqw;height:44cqw;border-radius:50%;background-size:cover;background-position:center 30%;background-color:#d9ccb4;box-shadow:0 0 0 1.4cqw #fffdf8,0 0 0 1.7cqw #c9a45c,0 3cqw 7cqw rgba(60,40,20,.3)}
+.fn__script{margin-top:9cqw;font:400 24cqw/1 'Parisienne';padding:0 2cqw}
+.fn__caps{margin:1cqw 0 5cqw;font:500 4cqw/1 'Jost';letter-spacing:.6em;text-transform:uppercase;color:var(--ink);padding-left:.6em}
+.fn__sig{margin-top:5cqw;font:italic 500 5.4cqw/1 'Cormorant Garamond';color:var(--ink-soft)}
+
+/* Contraportada */
+.bk{
+  background-color:#1c1210;
+  background-image:var(--noise),radial-gradient(90% 70% at 40% 30%,#3a241c,#1a100d 75%);
+  display:flex;align-items:center;justify-content:center;
+}
+.bk__in{display:flex;flex-direction:column;align-items:center;gap:4cqw}
+.bk__mono{font:400 20cqw/1 'Parisienne'}
+.bk__s{font:300 2.6cqw/1 'Jost';letter-spacing:.45em;text-transform:uppercase;color:var(--gold-2);padding-left:.45em}
+
+/* ---------- Controles ---------- */
+.ctrl{
+  width:min(560px,calc(100% - 28px));display:flex;align-items:center;gap:16px;
+  padding:10px 0 calc(14px + env(safe-area-inset-bottom));
+}
+.btn{
+  flex:none;width:48px;height:48px;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(232,210,158,.35);background:rgba(255,255,255,.05);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  color:var(--gold-2);display:grid;place-items:center;touch-action:manipulation;
+  transition:background .25s,border-color .25s,opacity .25s,transform .15s;
+}
+.btn:hover{background:rgba(232,210,158,.12);border-color:rgba(232,210,158,.6)}
+.btn:active{transform:scale(.94)}
+.btn:disabled{opacity:.28;cursor:default}
+.btn:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+.btn svg{width:20px;height:20px}
+.mid{flex:1;min-width:0;text-align:center}
+.lbl{font:italic 500 17px/1.2 'Cormorant Garamond';color:#f3e7cf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cnt{margin-top:3px;font:400 10.5px/1 'Jost';letter-spacing:.28em;text-transform:uppercase;color:rgba(232,210,158,.7)}
+.bar{height:2px;margin-top:9px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e37b3c,var(--gold-2));transition:width .7s cubic-bezier(.65,0,.35,1)}
+
+/* ---------- Pista ---------- */
+.hint{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  display:flex;align-items:center;gap:10px;padding:9px 16px 9px 12px;border-radius:99px;
+  background:rgba(14,10,8,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border:1px solid rgba(232,210,158,.25);
+  font:400 12px/1 'Jost';letter-spacing:.08em;color:#efe2c8;white-space:nowrap;
+  opacity:0;transition:opacity .6s ease;pointer-events:none;z-index:50;
+}
+.hint.on{opacity:1}
+.hint svg{width:20px;height:20px;color:var(--gold-2);animation:swipe 1.8s ease-in-out infinite}
+@keyframes swipe{0%,100%{transform:translateX(5px)}50%{transform:translateX(-5px)}}
+
+/* ---------- Intro ---------- */
+.intro{
+  position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background:radial-gradient(ellipse at center,#1d1410,#0e0a08 70%);transition:opacity .9s ease,visibility .9s;
+}
+.intro.done{opacity:0;visibility:hidden}
+.intro__k{font:300 11px/1 'Jost';letter-spacing:.5em;text-transform:uppercase;color:rgba(232,210,158,.75);padding-left:.5em}
+.intro__n{font:400 clamp(44px,12vw,72px)/1.2 'Parisienne';color:#f6e6c4}
+.intro__bar{width:120px;height:1px;margin-top:14px;background:rgba(232,210,158,.18);overflow:hidden}
+.intro__bar i{display:block;height:100%;width:40%;background:var(--gold-2);animation:load 1.3s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
+
+@media (prefers-reduced-motion:reduce){
+  .hint svg,.intro__bar i{animation:none}
+}
+</style>
 </head>
 <body>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="hero__img" style="background-image:url('foto3.jpg')"></div>
-  <div class="hero__gradient"></div>
-  <canvas id="embers" class="hero__embers"></canvas>
+<div class="amb" aria-hidden="true"><div class="amb__img" id="ambA"></div><div class="amb__img" id="ambB"></div></div>
+<canvas id="embers" aria-hidden="true"></canvas>
 
-  <div class="hero__content">
-    <p class="hero__eyebrow">una pequeña sorpresa para</p>
-    <h1 class="hero__names">Jack <span class="hero__amp">&amp;</span> Kathy</h1>
-    <p class="hero__tagline">para la persona que hace mi vida mejor.</p>
-    <button class="hero__scroll" id="scrollBtn" aria-label="Descubrir">
-      <span>descubrir</span>
-      <svg width="14" height="20" viewBox="0 0 14 20" fill="none" aria-hidden="true">
-        <path d="M7 1V19M7 19L1 13M7 19L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
-</section>
+<div class="intro" id="intro" aria-hidden="true">
+  <p class="intro__k">para</p>
+  <p class="intro__n">Katherin</p>
+  <span class="intro__bar"><i></i></span>
+</div>
 
-<!-- ============ GALERÍA ============ -->
-<section class="gallery" id="gallery">
-  <p class="section__eyebrow">recuerdos</p>
-  <h2 class="section__title">La noche de la fogata</h2>
-
-  <div class="gallery__grid">
-    <figure class="gallery__item gallery__item--tall">
-      <img src="foto1.jpg" alt="Jack y Kathy sentados juntos, sonriendo" loading="lazy">
-      <figcaption>El día que todo se sintió en su lugar.</figcaption>
-    </figure>
-
-    <figure class="gallery__item">
-      <img src="foto2.jpg" alt="Jack y Kathy, retrato de cerca" loading="lazy">
-      <figcaption>Mi persona favorita, de cerca.</figcaption>
-    </figure>
-
-    <figure class="gallery__item gallery__item--wide">
-      <img src="foto3.jpg" alt="Jack colocando una corona a Kathy" loading="lazy">
-      <figcaption>Esa noche no solo se encendió la fogata.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ============ CARTA ============ -->
-<section class="letter" id="letter">
-  <canvas id="embers2" class="letter__embers"></canvas>
-  <div class="letter__wrap">
-    <p class="section__eyebrow section__eyebrow--light">para ti</p>
-    <h2 class="letter__title">Kathy,</h2>
-
-    <div class="letter__body">
-      <p>Desde que llegaste a mi vida, todo tiene más color. No sé si te lo digo lo suficiente, pero quiero que sepas que eres la persona que hace que mis días buenos sean mejores, y los días difíciles, más fáciles de llevar solo con tenerte cerca.</p>
-
-      <p>Me encanta tu risa, la forma en que te emocionas por las cosas pequeñas, y cómo incluso en silencio, contigo, todo se siente en su lugar. Contigo he aprendido lo que es querer construir algo real, algo que dure.</p>
-
-      <p>Y sí, eres una niña bien necia y pleitista <span class="letter__wink">(lo sabes)</span>, pero eso no le quita ni un poquito a lo mucho que te quiero. Siempre vas a ser mi osita cariñosita.</p>
-
-      <p class="letter__highlight">Me di el lujo de poner nuestras fotos de la fogata en esta página, porque creo que esa noche no solo se encendió el fuego de la fogata... se encendió el de un amor.</p>
-
-      <p>Esta página es solo una forma pequeña de decirte lo grande que es lo que siento por ti. Gracias por elegirme, por quedarte, por ser mi persona.</p>
+<main class="app">
+  <section class="stage" id="stage" aria-label="Libro: 100 cosas que amo de Katherin">
+    <div class="book no-anim" id="book"></div>
+    <div class="hint" id="hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.6a6 6 0 0 1-4.9-2.6L4.3 15a1.5 1.5 0 0 1 2.4-1.8L9 15"/></svg>
+      Desliza o toca para pasar la página
     </div>
+  </section>
 
-    <p class="letter__sign">Te quiero, hoy y siempre.<br><span class="script">Jack</span></p>
-  </div>
-</section>
-
-<!-- ============ TE AMO PORQUE ============ -->
-<section class="reasons" id="reasons">
-  <p class="section__eyebrow">razones</p>
-  <h2 class="section__title">Te quiero porque...</h2>
-  <p class="reasons__hint">toca cada tarjeta</p>
-
-  <div class="reasons__grid">
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">💛</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Me haces reír hasta en los días grises.</p></div>
-      </div>
+  <nav class="ctrl" id="ctrl" aria-label="Navegación del libro">
+    <button class="btn" id="prev" type="button" aria-label="Página anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
-
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">🌙</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Tu chat es mi lugar favorito.</p></div>
-      </div>
+    <div class="mid">
+      <p class="lbl" id="lbl" aria-live="polite">Portada</p>
+      <p class="cnt" id="cnt">1 / 38</p>
+      <div class="bar"><i id="fill"></i></div>
+    </div>
+    <button class="btn" id="next" type="button" aria-label="Página siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
     </button>
+  </nav>
+</main>
 
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">☕</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Te apasionas mucho por tus metas y lo aprecio.</p></div>
+<script>
+(() => {
+'use strict';
+
+/* ================= CONTENIDO ================= */
+const REASONS = [
+'Porque eres la mujer más maravillosa.',
+'Porque tu sonrisa es la más bella, mi amor.',
+'Porque amo tu manera de ser, incluso de enojoncita.',
+'Porque tenés una forma única de hacerme feliz.',
+'Porque sos hermosa incluso cuando no te das cuenta.',
+'Porque amo escuchar tu voz.',
+'Porque tus ojos tienen algo que me encanta.',
+'Porque me gusta hasta tu manera de regañarme.',
+'Porque tenés una personalidad que no cambiaría por ninguna otra.',
+'Porque sos única e irreemplazable.',
+'Porque me encanta tu manera de reír, incluso las carcajadas.',
+'Porque cada pequeña cosa tuya me enamora.',
+'Porque admiro tu fortaleza ante los problemas.',
+'Porque tenés un corazón que vale muchísimo.',
+'Porque amo esos pequeños gestos, como tus besos bien chicles bomba.',
+'Porque me encanta cómo hablás.',
+'Porque sos especial sin necesidad de intentarlo.',
+'Porque me encantan tus manitos.',
+'Porque hasta tus ocurrencias me hacen sonreír.',
+'Porque simplemente me encantás.',
+'Porque me hacés sentir enamorado.',
+'Porque pensar en ti hace especiales mis días.',
+'Porque me hacés sonreír sin estar presente.',
+'Porque sos una de mis mayores alegrías.',
+'Porque me hacés sentir afortunado.',
+'Porque cuando hablo contigo pierdo la noción del tiempo.',
+'Porque me gusta imaginar un futuro a tu lado.',
+'Porque me das motivos para ser mejor persona.',
+'Porque me hacés sentir que el amor es algo hermoso.',
+'Porque tu presencia hace que todo sea diferente.',
+'Porque me hacés sentir emociones que no sabía explicar.',
+'Porque eres la primera persona en la que pienso al despertar.',
+'Porque muchas veces eres mi último pensamiento antes de dormir.',
+'Porque me encanta saber que existís.',
+'Porque me hacés sentir que tengo a alguien especial en mi vida.',
+'Porque me inspirás a luchar por mis sueños.',
+'Porque me hacés querer construir algo bonito.',
+'Porque contigo los momentos sencillos se vuelven especiales, incluso ir al Oriental.',
+'Porque me encanta extrañarte.',
+'Porque mi corazón se alegra cuando sé de ti.',
+'Porque amo cada momento que compartimos.',
+'Porque tenemos recuerdos que siempre voy a guardar.',
+'Porque me encanta pasar tiempo contigo, preciosa linda.',
+'Porque disfruto nuestras conversaciones.',
+'Porque amo nuestras bromas.',
+'Porque me encantan tus lindos labios.',
+'Porque cada experiencia a tu lado tiene un significado.',
+'Porque me encanta aprender cosas nuevas de ti; así puedo conocerte más.',
+'Porque quiero seguir creando recuerdos juntos.',
+'Porque nuestras historias forman parte de mi vida.',
+'Porque me gusta cuando podemos ser nosotros mismos.',
+'Porque amo los momentos en los que nos reímos juntos.',
+'Porque incluso un día normal puede ser especial contigo.',
+'Porque me encanta tu cabello, mi amor.',
+'Porque quiero seguir conociéndote cada día.',
+'Porque cada abrazo tuyo significa muchísimo para mí.',
+'Porque disfruto hasta las conversaciones más sencillas.',
+'Porque me encanta compartir mis planes contigo, así sea ir a El Salvador.',
+'Porque quiero celebrar tus logros.',
+'Porque quiero estar presente en muchos momentos importantes de tu vida.',
+'Porque admiro tu manera de enfrentar la vida.',
+'Porque tenés sueños que merecen hacerse realidad.',
+'Porque me gusta verte luchar por lo que querés.',
+'Porque admiro las cosas buenas que llevás dentro.',
+'Porque tenés cualidades que me inspiran.',
+'Porque me encanta cuando hablás de algo que te apasiona.',
+'Porque valoro tu esfuerzo.',
+'Porque sos mucho más de lo que tú misma imaginás.',
+'Porque admiro tu capacidad de seguir adelante.',
+'Porque me gusta ver cómo vas creciendo.',
+'Porque merecés cosas bonitas en la vida.',
+'Porque me encanta tu manera de expresar cariño.',
+'Porque tenés detalles que te hacen diferente.',
+'Porque valoro tu existencia.',
+'Porque me siento orgulloso de las cosas que conseguís.',
+'Porque no necesito que seas perfecta para amarte.',
+'Porque quiero conocerte incluso en tus días difíciles.',
+'Porque quiero celebrar tus alegrías.',
+'Porque quiero acompañarte cuando las cosas no salgan bien.',
+'Porque quiero seguir aprendiendo a amarte de la manera que merecés.',
+'Porque no quiero solamente los momentos bonitos; también quiero construir en los difíciles.',
+'Porque quiero ser alguien con quien puedas contar.',
+'Porque me importa tu felicidad.',
+'Porque quiero cuidar lo bonito que estamos construyendo.',
+'Porque quiero seguir descubriendo nuevas razones para amarte.',
+'Porque no me cansaría de escucharte hablar de tus sueños.',
+'Porque quiero verte cumplir cada una de tus metas.',
+'Porque quiero compartir nuevas aventuras contigo.',
+'Porque quiero seguir eligiéndote.',
+'Porque me encanta la idea de tenerte en mis planes.',
+'Porque llegaste a mi vida y te convertiste en alguien muy importante.',
+'Porque no hay otra persona exactamente como tú.',
+'Porque amo la mujer que sos.',
+'Porque incluso cuando no encuentro las palabras, mi corazón sabe lo que siente por ti.',
+'Porque quiero que nunca dudés de lo valiosa que sos.',
+'Porque tu felicidad también se ha convertido en algo importante para mí.',
+'Porque si pudiera volver a conocerte, quisiera tener la oportunidad de enamorarme de ti otra vez, mi pequeña búha.',
+'Porque entre tantas personas, mi corazón encontró en ti a alguien especial.',
+'Porque no sé cuántas razones más descubriré con el tiempo, pero quiero seguir encontrándolas a tu lado.',
+'Porque eres tú. Y eso, mi amor, es una razón que no necesita explicación.'
+];
+
+const CHAPTERS = [
+  { num:'I',   title:'Por ser como sos',                     from:1,  to:20,  img:'foto1.jpg', per:5 },
+  { num:'II',  title:'Por lo que provocás en mí',            from:21, to:60,  img:'foto2.jpg', per:5 },
+  { num:'III', title:'Por lo que admiro de ti',              from:61, to:90,  img:'foto3.jpg', per:5 },
+  { num:'IV',  title:'Las últimas diez, las más especiales', from:91, to:100, img:'foto1.jpg', per:1 }
+];
+
+const IMGS = ['foto1.jpg','foto2.jpg','foto3.jpg'];
+const HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.1C.9 8.6 2.9 4.5 6.8 4.5c2.2 0 3.6 1.2 5.2 3 1.6-1.8 3-3 5.2-3 3.9 0 5.9 4.1 4.4 7.4C19.5 16.4 12 21 12 21z"/></svg>';
+const ORN = `<span class="orn"><i></i>${HEART}<i></i></span>`;
+const fmt = t => t.replace(/^Porque/, '<em>Porque</em>');
+const folio = n => `<footer class="pf"><i></i>${n}<i></i></footer>`;
+
+/* ================= PÁGINAS ================= */
+const pages = [];
+const add = (type, html, bg, label) => pages.push({ type, html, bg, label });
+
+add('cover', `
+  <div class="pg cv">
+    <div class="ph" style="background-image:url('foto3.jpg')" role="img" aria-label="Jack y Katherin"></div>
+    <div class="veil veil--cv"></div><div class="frame"></div>
+    <p class="cv__top">Edición única</p>
+    <div class="cv__in">
+      <span class="cv__num gold">100</span>
+      <span class="cv__t">cosas que amo de</span>
+      <span class="cv__name">Katherin</span>
+      <span class="cv__rule"></span>
+      <span class="cv__by">de parte de Jack Arauz</span>
+    </div>
+  </div>`, 'foto3.jpg', 'Portada');
+
+add('endpaper', `
+  <div class="pg ep">
+    <div class="ep__plate">
+      <span class="ep__k">Este libro pertenece a</span>
+      <span class="ep__name gold-ink">Katherin</span>
+      ${ORN}
+    </div>
+  </div>`, 'foto3.jpg', 'Ex libris');
+
+add('photo', `
+  <div class="pg paper pp">
+    <div class="pp__frame"><div class="pp__img" style="background-image:url('foto2.jpg')" role="img" aria-label="Jack y Katherin"></div></div>
+    <p class="pp__cap">Jack &amp; Katherin</p>
+  </div>`, 'foto2.jpg', 'Jack & Katherin');
+
+CHAPTERS.forEach(ch => {
+  add('divider', `
+    <div class="pg dv">
+      <div class="ph" style="background-image:url('${ch.img}')" role="img" aria-label="Jack y Katherin"></div>
+      <div class="veil veil--dv"></div><div class="frame"></div>
+      <div class="dv__in">
+        <span class="dv__k">Capítulo</span>
+        <span class="dv__roman gold">${ch.num}</span>
+        <h2 class="dv__t">${ch.title}</h2>
+        <span class="dv__r">Razones ${ch.from} — ${ch.to}</span>
       </div>
-    </button>
+    </div>`, ch.img, `Capítulo ${ch.num} · ${ch.title}`);
 
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">🌟</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Me entiendes sin que tenga que explicar mucho, y sino me entiendes por lo menos me aceptas JAJAJA.</p></div>
-      </div>
-    </button>
+  for (let a = ch.from; a <= ch.to; a += ch.per) {
+    const b = Math.min(ch.to, a + ch.per - 1);
+    const num = pages.length + 1;
+    if (ch.per === 1) {
+      add('special', `
+        <div class="pg paper sp${a === 100 ? ' sp--last' : ''}">
+          <span class="sp__k">Razón</span>
+          <span class="sp__num gold-ink">${a}</span>
+          ${ORN}
+          <p class="sp__text">${fmt(REASONS[a - 1])}</p>
+          ${folio(num)}
+        </div>`, ch.img, `Razón ${a}`);
+    } else {
+      let items = '';
+      for (let k = a; k <= b; k++) items += `<li><span class="rn gold-ink">${k}</span><p>${fmt(REASONS[k - 1])}</p></li>`;
+      add('reasons', `
+        <div class="pg paper rp">
+          <header class="rh"><span class="rh__k">Cap. ${ch.num}</span><span class="rh__t">${ch.title}</span></header>
+          <ol class="rl" start="${a}">${items}</ol>
+          ${folio(num)}
+        </div>`, ch.img, `Razones ${a} – ${b}`);
+    }
+  }
+});
 
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">🍃</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Tu paciencia y tu forma de querer.</p></div>
-      </div>
-    </button>
+add('quote', `
+  <div class="pg qt">
+    <div class="ph" style="background-image:url('foto2.jpg')" role="img" aria-label="Jack y Katherin"></div>
+    <div class="veil veil--q"></div><div class="frame"></div>
+    <div class="qt__in">
+      <span class="qt__mark gold">“</span>
+      <p class="qt__text">Hay 8 mil millones de personas en el mundo, 8 mil millones de almas… y a veces solo necesitas a una.</p>
+      <span class="qt__rule"></span>
+      <p class="qt__by">Berlín · <em>La casa de papel</em></p>
+    </div>
+  </div>`, 'foto2.jpg', 'Berlín · La casa de papel');
 
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">💫</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Contigo hasta lo simple se vuelve especial.</p></div>
-      </div>
-    </button>
+add('final', `
+  <div class="pg paper fn">
+    <div class="fn__ph" style="background-image:url('foto3.jpg')" role="img" aria-label="Jack y Katherin"></div>
+    <p class="fn__script gold-ink">Te amo</p>
+    <p class="fn__caps">mi amor</p>
+    ${ORN}
+    <p class="fn__sig">Jack Arauz</p>
+  </div>`, 'foto3.jpg', 'Te amo, mi amor');
 
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">🔥</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Eres mi persona favorita en el mundo.</p></div>
-      </div>
-    </button>
+if (pages.length % 2 === 0) {
+  // Añade página en blanco antes de la contraportada para que la cuenta de páginas sea par
+  add('blank', '<div class="pg paper"></div>', 'foto3.jpg', 'Te amo, mi amor');
+}
+add('back', `
+  <div class="pg bk">
+    <div class="frame"></div>
+    <div class="bk__in">
+      <span class="bk__mono gold">J &amp; K</span>
+      <span class="bk__s">100 razones · para siempre</span>
+    </div>
+  </div>`, 'foto1.jpg', 'Fin');
 
-    <button class="card" type="button">
-      <div class="card__inner">
-        <div class="card__face card__face--front"><span class="card__icon">💍</span><p>Toca para ver</p></div>
-        <div class="card__face card__face--back"><p>Quiero seguir escribiendo esta historia contigo.</p></div>
-      </div>
-    </button>
-  </div>
-</section>
+/* ================= MOTOR DEL LIBRO ================= */
+const $ = s => document.getElementById(s);
+const stage = $('stage'), book = $('book'), ctrl = $('ctrl');
+const prevBtn = $('prev'), nextBtn = $('next'), lbl = $('lbl'), cnt = $('cnt'), fill = $('fill'), hint = $('hint');
+const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const BASE_DUR = REDUCE ? 320 : 1000;
+const FAST_DUR = REDUCE ? 260 : 620;
+const ICON_NEXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+const ICON_RESTART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>';
 
-<!-- ============ CIERRE ============ -->
-<footer class="closing" id="closing">
-  <div class="closing__embers-bg"></div>
-  <p class="closing__text">Esto es solo el comienzo de todo lo que quiero vivir contigo.<br>Gracias por ser tú.</p>
-  <p class="closing__sign script">Con todo mi amor, Jack</p>
-  <p class="closing__nick">mi osita cariñosita, siempre. 🐻🔥</p>
-</footer>
+let spread = false, pw = 0, ph = 0;
+let leaves = [], n = 0, current = 0;
+let animating = false, pending = 0, hintShown = false;
 
-<script src="script.js"></script>
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const maxCur = () => spread ? n : n - 1;
+
+function layout() {
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const ch = ctrl.offsetHeight || 84;
+  const mobile = vw < 640;
+  const availH = vh - ch - (mobile ? 22 : 48);
+  const availW = vw - (mobile ? 24 : 72);
+  spread = vw >= 900 && vw > vh * 1.15;
+  const R = 0.68;
+  let w = spread ? Math.min(availW / 2, availH * R, 560) : Math.min(availW, availH * R, 560);
+  w = Math.max(200, Math.floor(w));
+  pw = w; ph = Math.floor(w / R);
+  const st = document.documentElement.style;
+  st.setProperty('--pw', pw + 'px');
+  st.setProperty('--ph', ph + 'px');
+  st.setProperty('--persp', Math.round(pw * (spread ? 4.2 : 3.6)) + 'px');
+}
+
+function faceHTML(side, p) {
+  const k = p ? 'k-' + p.type : 'k-blank';
+  const inner = p ? p.html : '<div class="pg paper"></div>';
+  return `<div class="face face--${side} ${k}">${inner}<div class="gutter"></div><div class="shade"></div></div>`;
+}
+
+function buildBook() {
+  book.innerHTML = '<div class="base base-l"></div><div class="base base-r"></div>';
+  book.classList.toggle('is-spread', spread);
+  leaves = [];
+  n = spread ? pages.length / 2 : pages.length;
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < n; i++) {
+    const f = spread ? pages[2 * i] : pages[i];
+    const b = spread ? pages[2 * i + 1] : null;
+    const el = document.createElement('div');
+    el.className = 'leaf';
+    el.innerHTML = faceHTML('front', f) + faceHTML('back', b);
+    const fe = el.children[0], be = el.children[1];
+    leaves.push({ el, f: fe, b: be, fs: fe.querySelector('.shade'), bs: be.querySelector('.shade'), angle: 0 });
+    frag.appendChild(el);
+  }
+  book.appendChild(frag);
+}
+
+function setLeaf(L, a) {
+  L.angle = a;
+  const s = Math.sin(a * Math.PI / 180);
+  const back = a > 90;
+  L.el.style.transform = `rotateY(${(-a).toFixed(2)}deg)`;
+  L.f.style.visibility = back ? 'hidden' : 'visible';
+  L.b.style.visibility = back ? 'visible' : 'hidden';
+  L.fs.style.opacity = back ? 0 : (s * .85).toFixed(3);
+  L.bs.style.opacity = back ? (s * .85).toFixed(3) : 0;
+  const shadow = s > .01 ? `0 0 ${Math.round(44 * s)}px rgba(0,0,0,${(.45 * s).toFixed(3)})` : '';
+  (back ? L.b : L.f).style.boxShadow = shadow;
+  (back ? L.f : L.b).style.boxShadow = '';
+  L.el.style.opacity = (!spread && a > 95) ? Math.max(0, 1 - (a - 95) / 55).toFixed(3) : 1;
+}
+
+function showRange(lo, hi) {
+  leaves.forEach((L, i) => { if (i >= lo && i <= hi) L.el.style.display = ''; });
+}
+
+function arrange() {
+  leaves.forEach((L, i) => {
+    const flipped = i < current;
+    L.el.style.zIndex = flipped ? i + 1 : n - i + 1;
+    L.el.style.display = (i >= current - 2 && i <= current + 1) ? '' : 'none';
+  });
+}
+
+function shift(c) {
+  if (!spread) { book.style.transform = ''; return; }
+  const x = c === 0 ? -pw / 2 : (c === n ? pw / 2 : 0);
+  book.style.transform = `translateX(${x}px)`;
+}
+
+function bases(cs) {
+  const l = book.querySelector('.base-l'), r = book.querySelector('.base-r');
+  r.classList.toggle('on', cs.some(c => spread ? c < n : true));
+  l.classList.toggle('on', spread && cs.some(c => c > 0));
+}
+
+function visIdx() {
+  if (!spread) return current;
+  if (current === 0) return 0;
+  if (current === n) return pages.length - 1;
+  return 2 * current;
+}
+
+function ui() {
+  const idx = visIdx();
+  lbl.textContent = pages[idx].label;
+  cnt.textContent = (spread && current > 0 && current < n)
+    ? `${2 * current} – ${2 * current + 1} / ${pages.length}`
+    : `${idx + 1} / ${pages.length}`;
+  fill.style.width = (current / maxCur() * 100).toFixed(2) + '%';
+  prevBtn.disabled = current === 0;
+  const atEnd = current >= maxCur();
+  nextBtn.innerHTML = atEnd ? ICON_RESTART : ICON_NEXT;
+  nextBtn.setAttribute('aria-label', atEnd ? 'Volver al inicio' : 'Página siguiente');
+  setAmbient(pages[idx].bg);
+}
+
+let ambOn = null, ambUrl = '';
+const ambA = $('ambA'), ambB = $('ambB');
+function setAmbient(url) {
+  if (!url || url === ambUrl) return;
+  ambUrl = url;
+  const next = ambOn === ambA ? ambB : ambA;
+  next.style.backgroundImage = `url('${url}')`;
+  next.classList.add('on');
+  if (ambOn) ambOn.classList.remove('on');
+  ambOn = next;
+}
+
+function settle() { arrange(); bases([current]); ui(); }
+
+function dur(from, to, base) { return (base || BASE_DUR) * Math.max(.38, Math.abs(to - from) / 180); }
+
+function run(L, from, to, d, done) {
+  animating = true;
+  L.el.style.display = '';
+  L.el.style.zIndex = n + 10;
+  const t0 = performance.now();
+  const tick = t => {
+    const k = Math.min(1, (t - t0) / d);
+    setLeaf(L, from + (to - from) * ease(k));
+    if (k < 1) { requestAnimationFrame(tick); return; }
+    animating = false;
+    done();
+    if (pending) { const p = pending; pending = 0; go(p, FAST_DUR); }
+  };
+  requestAnimationFrame(tick);
+}
+
+function go(dir, base) {
+  if (animating) { pending = dir; return; }
+  const target = current + dir;
+  if (target < 0 || target > maxCur()) return;
+  hideHint();
+  const L = dir > 0 ? leaves[current] : leaves[current - 1];
+  const from = dir > 0 ? 0 : 180, to = dir > 0 ? 180 : 0;
+  showRange(Math.min(current, target) - 2, Math.max(current, target) + 1);
+  shift(target);
+  bases([current, target]);
+  run(L, from, to, dur(from, to, base), () => { current = target; settle(); });
+}
+
+function restart() {
+  if (animating) return;
+  book.style.opacity = 0;
+  setTimeout(() => {
+    book.classList.add('no-anim');
+    current = 0;
+    leaves.forEach(L => setLeaf(L, 0));
+    shift(0); settle();
+    void book.offsetWidth;
+    book.classList.remove('no-anim');
+    book.style.opacity = 1;
+  }, 420);
+}
+
+/* ----- Arrastrar / tocar ----- */
+let ptr = null;
+stage.addEventListener('pointerdown', e => {
+  if (e.button > 0 || animating) return;
+  const now = performance.now();
+  ptr = { id: e.pointerId, x: e.clientX, y: e.clientY, drag: false, dead: false, dir: 0, L: null, lastX: e.clientX, lastT: now, vx: 0 };
+  try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+});
+
+stage.addEventListener('pointermove', e => {
+  if (!ptr || e.pointerId !== ptr.id || ptr.dead) return;
+  const dx = e.clientX - ptr.x, dy = e.clientY - ptr.y;
+  if (!ptr.drag) {
+    if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    const dir = dx < 0 ? 1 : -1;
+    if ((dir > 0 && current < maxCur()) || (dir < 0 && current > 0)) {
+      ptr.drag = true; ptr.dir = dir;
+      ptr.L = dir > 0 ? leaves[current] : leaves[current - 1];
+      showRange(current - 2, current + 1);
+      ptr.L.el.style.display = '';
+      ptr.L.el.style.zIndex = n + 10;
+      hideHint();
+    } else { ptr.dead = true; return; }
+  }
+  const k = 180 / pw * 1.05;
+  const a = ptr.dir > 0 ? clamp(-dx * k, 0, 180) : clamp(180 - dx * k, 0, 180);
+  setLeaf(ptr.L, a);
+  const now = performance.now();
+  ptr.vx = (e.clientX - ptr.lastX) / Math.max(1, now - ptr.lastT);
+  ptr.lastX = e.clientX; ptr.lastT = now;
+});
+
+function endPointer(e) {
+  if (!ptr || e.pointerId !== ptr.id) return;
+  const p = ptr; ptr = null;
+  if (p.drag) {
+    if (performance.now() - p.lastT > 120) p.vx = 0;
+    const a = p.L.angle;
+    const complete = e.type !== 'pointercancel' && (p.dir > 0 ? (a > 70 || p.vx < -.45) : (a < 110 || p.vx > .45));
+    if (complete) {
+      const target = current + p.dir, to = p.dir > 0 ? 180 : 0;
+      shift(target); bases([current, target]);
+      run(p.L, a, to, dur(a, to), () => { current = target; settle(); });
+    } else {
+      const to = p.dir > 0 ? 0 : 180;
+      run(p.L, a, to, dur(a, to, FAST_DUR), settle);
+    }
+  } else if (!p.dead && e.type === 'pointerup' && Math.hypot(e.clientX - p.x, e.clientY - p.y) < 10) {
+    const r = book.getBoundingClientRect();
+    if (spread) go(e.clientX > r.left + r.width / 2 ? 1 : -1);
+    else go(e.clientX > r.left + r.width * .3 ? 1 : -1);
+  }
+}
+stage.addEventListener('pointerup', endPointer);
+stage.addEventListener('pointercancel', endPointer);
+stage.addEventListener('contextmenu', e => e.preventDefault());
+
+prevBtn.addEventListener('click', () => go(-1));
+nextBtn.addEventListener('click', () => { if (current >= maxCur()) restart(); else go(1); });
+document.addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (current < maxCur()) go(1); }
+  else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); go(-1); }
+  else if (e.key === 'Home') restart();
+});
+
+function showHint() { if (!hintShown) { hintShown = true; hint.classList.add('on'); setTimeout(hideHint, 6500); } }
+function hideHint() { hint.classList.remove('on'); hintShown = true; }
+
+/* ----- Redimensionar ----- */
+let rt = 0;
+function onResize() {
+  clearTimeout(rt);
+  rt = setTimeout(() => {
+    if (animating || ptr) { onResize(); return; }
+    const was = spread;
+    layout();
+    if (was !== spread) {
+      const p = was ? (current === n ? pages.length - 1 : 2 * current) : current;
+      buildBook();
+      current = spread ? Math.ceil(p / 2) : Math.min(p, pages.length - 1);
+    }
+    book.classList.add('no-anim');
+    leaves.forEach((L, i) => setLeaf(L, i < current ? 180 : 0));
+    shift(current); settle();
+    void book.offsetWidth;
+    book.classList.remove('no-anim');
+  }, 140);
+}
+window.addEventListener('resize', onResize);
+window.addEventListener('orientationchange', onResize);
+
+/* ----- Inicio ----- */
+layout();
+buildBook();
+leaves.forEach(L => setLeaf(L, 0));
+shift(0); settle();
+requestAnimationFrame(() => requestAnimationFrame(() => book.classList.remove('no-anim')));
+
+const loadImg = src => new Promise(res => { const i = new Image(); i.onload = i.onerror = res; i.src = src; });
+const ready = Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), ...IMGS.map(loadImg)]);
+Promise.race([ready, new Promise(r => setTimeout(r, 4000))]).then(() => {
+  layout(); settle();
+  setTimeout(() => { $('intro').classList.add('done'); setTimeout(showHint, 900); }, 500);
+});
+
+/* ================= BRASAS ================= */
+const cv = $('embers'), cx = cv.getContext('2d');
+let W = 0, H = 0, DPR = 1, parts = [], running = true;
+function sizeCv() {
+  DPR = Math.min(2, window.devicePixelRatio || 1);
+  W = window.innerWidth; H = window.innerHeight;
+  cv.width = W * DPR; cv.height = H * DPR;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
+  cx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+function mk(init) {
+  return { x: Math.random() * W, y: init ? Math.random() * H : H + 10, r: .6 + Math.random() * 1.8,
+           vy: .25 + Math.random() * .7, ph: Math.random() * 6.28, a: .25 + Math.random() * .55 };
+}
+function initEmbers() {
+  sizeCv();
+  const count = W < 640 ? 26 : 48;
+  parts = Array.from({ length: count }, () => mk(true));
+}
+function loop() {
+  if (!running) return;
+  cx.clearRect(0, 0, W, H);
+  cx.globalCompositeOperation = 'lighter';
+  for (const p of parts) {
+    p.y -= p.vy; p.ph += .02; p.x += Math.sin(p.ph) * .35;
+    if (p.y < -12) Object.assign(p, mk(false));
+    const fade = Math.min(1, p.y / (H * .35));
+    const g = cx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+    g.addColorStop(0, `rgba(255,190,110,${p.a * fade})`);
+    g.addColorStop(1, 'rgba(255,120,40,0)');
+    cx.fillStyle = g;
+    cx.beginPath(); cx.arc(p.x, p.y, p.r * 5, 0, 6.283); cx.fill();
+  }
+  requestAnimationFrame(loop);
+}
+if (!REDUCE) {
+  initEmbers(); loop();
+  window.addEventListener('resize', () => { sizeCv(); });
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) loop();
+  });
+}
+})();
+</script>
 </body>
 </html>
